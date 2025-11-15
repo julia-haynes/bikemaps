@@ -10,9 +10,9 @@ body {
 }
 
 #map {
-  width: 100%; /* Adjust width to your desired size */
-  height: 100vh; /* Adjust height to your desired size */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for effect */
+  width: 100%; 
+  height: 100vh; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   border-radius: 8px; /* Optional: rounded corners */
 }
 
@@ -29,5 +29,93 @@ body {
     fill-opacity: 60%;
     stroke: white;
     fill: steelblue;
+    pointer-events: auto;
+    
+    --color-departures: steelblue;
+    --color-arrivals: darkorange;
+    --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+    );
+    fill: var(--color);
+    
+}
+
+#map circle,
+.legend > div {
+  --color-arrivals: darkorange;
+  --color-balanced: #d0a2d0;
+  --color-departures: steelblue;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+    );
+    fill: var(--color);
+
+  /* Map the quantize outputs (0, 0.5, 1) to these colors 
+  --color: 
+    calc(var(--departure-ratio) == 1 ? var(--color-departures) :
+    calc(var(--departure-ratio) == 0.5 ? var(--color-balanced) :
+    var(--color-arrivals)));
+    */
+}
+
+.legend {
+  display: flex;
+  gap: 2rem;              
+  margin-block: 1rem;     
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.legend-label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;             
+  font-size: 0.9rem;
+}
+
+.legend > div::before {
+  content: "";
+  width: 1.2rem;
+  height: 1.2rem;
+  background: var(--color);
+  border: 1px solid #333;
+  border-radius: 50%;
+}
+
+
+
+header {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+  padding: 1em;
+}
+
+#time-filter {
+  margin-left: auto;  
+}
+
+#time-filter input[type="range"] {
+  width: 200px;
+}
+
+#selected-time,
+#any-time {
+  display: block; 
+  margin-top: 0.25em;
+}
+
+#any-time {
+  color: #666;
+  font-style: italic;
 }
 
